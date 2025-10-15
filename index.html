@@ -1,0 +1,1465 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Informe de Marketing - Tecnopluscol | Arquetipos y Estrategias</title>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #6366f1;
+            --secondary-color: #ec4899;
+            --accent-color: #10b981;
+            --dark-bg: #0f172a;
+            --light-bg: #f8fafc;
+            --text-dark: #1e293b;
+            --text-light: #64748b;
+            --white: #ffffff;
+            --gradient-1: linear-gradient(135deg, #6366f1 0%, #ec4899 100%);
+            --gradient-2: linear-gradient(135deg, #10b981 0%, #3b82f6 100%);
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+            --shadow-md: 0 4px 6px rgba(0,0,0,0.1), 0 2px 4px rgba(0,0,0,0.06);
+            --shadow-lg: 0 10px 15px rgba(0,0,0,0.1), 0 4px 6px rgba(0,0,0,0.05);
+            --shadow-xl: 0 20px 25px rgba(0,0,0,0.15), 0 10px 10px rgba(0,0,0,0.04);
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--light-bg);
+            color: var(--text-dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 700;
+        }
+
+        /* Navegación flotante */
+        .floating-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 0.75rem 0;
+            box-shadow: var(--shadow-md);
+            z-index: 1000;
+            transition: transform 0.3s ease;
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .logo-img {
+            height: 50px;
+            width: auto;
+        }
+
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 500;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-color);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--gradient-1);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Hero Section */
+        .hero {
+            margin-top: 80px;
+            padding: 4rem 2rem;
+            background: var(--gradient-1);
+            color: var(--white);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="rgba(255,255,255,0.1)" d="M0,96L48,112C96,128,192,160,288,160C384,160,480,128,576,122.7C672,117,768,139,864,154.7C960,171,1056,181,1152,165.3C1248,149,1344,107,1392,85.3L1440,64L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>') no-repeat bottom;
+            background-size: cover;
+            opacity: 0.5;
+        }
+
+        .hero-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero-subtitle {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            opacity: 0.9;
+        }
+
+        .hero-meta {
+            font-size: 1.1rem;
+            opacity: 0.8;
+        }
+        
+        /* Dashboard Section */
+        .dashboard {
+            max-width: 1400px;
+            margin: -3rem auto 4rem;
+            padding: 0 2rem;
+            position: relative;
+            z-index: 10;
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .metric-card {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 16px;
+            box-shadow: var(--shadow-lg);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .metric-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--gradient-1);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .metric-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .metric-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .metric-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+        }
+
+        .metric-card:nth-child(1) .metric-icon { background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%); color: white; }
+        .metric-card:nth-child(2) .metric-icon { background: linear-gradient(135deg, #ec4899 0%, #f43f5e 100%); color: white; }
+        .metric-card:nth-child(3) .metric-icon { background: linear-gradient(135deg, #10b981 0%, #14b8a6 100%); color: white; }
+        .metric-card:nth-child(4) .metric-icon { background: linear-gradient(135deg, #f59e0b 0%, #f97316 100%); color: white; }
+
+        .metric-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 0.5rem;
+        }
+
+        .metric-label {
+            color: var(--text-light);
+            font-size: 0.95rem;
+            font-weight: 500;
+        }
+
+        /* Charts Section */
+        .charts-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .chart-card {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 16px;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .chart-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            color: var(--text-dark);
+        }
+
+        /* Content Sections */
+        .content-section {
+            max-width: 1400px;
+            margin: 4rem auto;
+            padding: 0 2rem;
+        }
+
+        .section-header { text-align: center; margin-bottom: 3rem; }
+        .section-number {
+            display: inline-block;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--gradient-1);
+            color: var(--white);
+            font-size: 1.5rem;
+            font-weight: 700;
+            line-height: 50px;
+            margin-bottom: 1rem;
+        }
+        .section-title { font-size: 2.5rem; margin-bottom: 1rem; color: var(--text-dark); }
+        .section-description { font-size: 1.1rem; color: var(--text-light); max-width: 800px; margin: 0 auto; }
+
+        /* Content Card */
+        .content-card {
+            background: var(--white);
+            padding: 3rem;
+            border-radius: 16px;
+            box-shadow: var(--shadow-md);
+            margin-bottom: 2rem;
+        }
+        .content-card h3 { font-size: 1.8rem; margin-bottom: 1.5rem; color: var(--text-dark); }
+        .content-card p { font-size: 1.05rem; line-height: 1.8; color: var(--text-dark); margin-bottom: 1rem; }
+
+        /* Buyer Persona Cards */
+        .persona-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .persona-card {
+            background: var(--white);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: var(--shadow-lg);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .persona-card:hover { transform: translateY(-10px); box-shadow: var(--shadow-xl); }
+        .persona-header { padding: 2rem; color: var(--white); position: relative; }
+        .persona-header.positive { background: linear-gradient(135deg, #10b981 0%, #059669 100%); }
+        .persona-header.negative { background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%); }
+        .persona-avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            border: 4px solid rgba(255, 255, 255, 0.3);
+        }
+        .persona-name { font-size: 2rem; margin-bottom: 0.5rem; }
+        .persona-tagline { font-size: 1.1rem; opacity: 0.9; }
+        .persona-body { padding: 2rem; }
+        .persona-detail {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        .persona-detail:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+        .detail-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            background: var(--gradient-1);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1rem;
+            flex-shrink: 0;
+        }
+        .detail-content h4 { font-size: 1.1rem; margin-bottom: 0.5rem; color: var(--text-dark); }
+        .detail-content p { color: var(--text-light); font-size: 0.95rem; }
+
+        /* Table Styling */
+        .data-table {
+            width: 100%;
+            margin: 2rem 0;
+            border-collapse: separate;
+            border-spacing: 0;
+            background: var(--white);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: var(--shadow-md);
+        }
+        .data-table thead { background: var(--gradient-1); color: var(--white); }
+        .data-table th { padding: 1.2rem; text-align: left; font-weight: 600; font-size: 0.95rem; }
+        .data-table td { padding: 1.2rem; border-bottom: 1px solid #e2e8f0; }
+        .data-table tbody tr:last-child td { border-bottom: none; }
+        .data-table tbody tr { transition: background-color 0.2s ease; }
+        .data-table tbody tr:hover { background-color: #f8fafc; }
+
+        /* Strategy Pills */
+        .strategy-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .strategy-card {
+            background: var(--white);
+            padding: 2.5rem;
+            border-radius: 16px;
+            box-shadow: var(--shadow-md);
+            border-left: 4px solid;
+            transition: all 0.3s ease;
+        }
+        .strategy-card:nth-child(1) { border-left-color: #6366f1; }
+        .strategy-card:nth-child(2) { border-left-color: #ec4899; }
+        .strategy-card:nth-child(3) { border-left-color: #10b981; }
+        .strategy-card:hover { transform: translateX(5px); box-shadow: var(--shadow-lg); }
+        .strategy-number {
+            display: inline-flex;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--gradient-1);
+            color: white;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+        .strategy-card h3 { font-size: 1.5rem; margin-bottom: 1rem; color: var(--text-dark); }
+        .strategy-card ul { list-style: none; margin-top: 1rem; }
+        .strategy-card li { padding: 0.8rem 0 0.8rem 2rem; position: relative; color: var(--text-dark); }
+        .strategy-card li::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: var(--primary-color);
+            font-weight: 700;
+        }
+
+        /* Script Cards */
+        .script-card {
+            background: var(--white);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow-md);
+            border: 2px solid #e2e8f0;
+            transition: all 0.3s ease;
+        }
+        .script-card:hover { border-color: var(--primary-color); box-shadow: var(--shadow-lg); }
+        .script-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid #e2e8f0;
+        }
+        .script-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 12px;
+            background: var(--gradient-1);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            margin-right: 1.5rem;
+        }
+        .script-title h3 { font-size: 1.5rem; margin-bottom: 0.3rem; }
+        .script-subtitle { color: var(--text-light); font-size: 0.95rem; }
+        .script-table { width: 100%; margin-top: 1rem; }
+        .script-table td { padding: 1rem; vertical-align: top; }
+        .script-table td:first-child { font-weight: 600; color: var(--primary-color); width: 20%; }
+
+        /* Download Section */
+        .download-section {
+            background: var(--gradient-1);
+            color: var(--white);
+            padding: 4rem 2rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .download-section::before, .download-section::after {
+            content: '';
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+        }
+        .download-section::before { top: -50%; right: -10%; }
+        .download-section::after { bottom: -50%; left: -10%; }
+        .download-content { max-width: 800px; margin: 0 auto; position: relative; z-index: 1; }
+        .download-section h2 { font-size: 2.5rem; margin-bottom: 1rem; }
+        .download-section p { font-size: 1.2rem; margin-bottom: 2rem; opacity: 0.9; }
+        .btn-download {
+            display: inline-flex;
+            align-items: center;
+            gap: 1rem;
+            background: var(--white);
+            color: var(--primary-color);
+            padding: 1.2rem 3rem;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow-lg);
+        }
+        .btn-download:hover { transform: translateY(-3px); box-shadow: var(--shadow-xl); }
+        .btn-download i { font-size: 1.5rem; }
+
+        /* Footer */
+        .footer {
+            background: var(--dark-bg);
+            color: var(--white);
+            padding: 3rem 2rem;
+            text-align: center;
+        }
+        .footer-content { max-width: 1200px; margin: 0 auto; }
+        .footer p { opacity: 0.8; margin-bottom: 0.5rem; }
+        .footer-logo {
+            justify-content: center;
+            margin-bottom: 1.5rem;
+        }
+        .footer-logo .logo-text {
+            background: none;
+            -webkit-text-fill-color: var(--white);
+            opacity: 0.9;
+        }
+        .footer-nav {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin: 1.5rem 0;
+            padding: 0;
+            flex-wrap: wrap;
+        }
+        .footer-nav a {
+            color: var(--white);
+            text-decoration: none;
+            opacity: 0.7;
+            transition: opacity 0.3s ease;
+            font-weight: 500;
+        }
+        .footer-nav a:hover {
+            opacity: 1;
+        }
+
+
+        /* Scroll Progress Bar */
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 4px;
+            background: var(--gradient-1);
+            z-index: 9999;
+            transition: width 0.1s ease;
+        }
+        
+        /* Badge */
+        .badge { display: inline-block; padding: 0.4rem 1rem; border-radius: 20px; font-size: 0.85rem; font-weight: 600; margin-left: 1rem; }
+        .badge-success { background: #d1fae5; color: #065f46; }
+        .badge-danger { background: #fee2e2; color: #991b1b; }
+
+        /* Highlight Box */
+        .highlight-box {
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            border-left: 4px solid #f59e0b;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 2rem 0;
+        }
+        .highlight-box h4 { color: #92400e; margin-bottom: 0.5rem; }
+        .highlight-box p { color: #78350f; margin: 0; }
+
+        /* Scroll Animations */
+        .animate-on-scroll {
+            opacity: 0;
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+            will-change: opacity, transform;
+        }
+        .animate-on-scroll[data-animation="fade-up"] { transform: translateY(40px); }
+        .animate-on-scroll[data-animation="fade-left"] { transform: translateX(-40px); }
+        .animate-on-scroll[data-animation="fade-right"] { transform: translateX(40px); }
+        .animate-on-scroll.is-visible {
+            opacity: 1;
+            transform: translate(0, 0);
+        }
+        
+        /* Download Overlay */
+        .download-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(5px);
+            z-index: 10000;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            text-align: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .download-overlay.active {
+            display: flex;
+        }
+        .overlay-content {
+            animation: fadeInUp 0.5s ease;
+        }
+        .overlay-content h2 {
+            font-size: 2rem;
+            margin-top: 1.5rem;
+        }
+        .overlay-content p {
+            font-size: 1.1rem;
+            opacity: 0.8;
+            margin-top: 0.5rem;
+        }
+        .loading-spinner {
+            width: 60px;
+            height: 60px;
+            border: 5px solid rgba(255, 255, 255, 0.3);
+            border-top-color: var(--white);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+
+        /* Scroll to Top Button */
+        .scroll-to-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: var(--primary-color);
+            color: var(--white);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            text-decoration: none;
+            box-shadow: var(--shadow-lg);
+            visibility: hidden;
+            opacity: 0;
+            transform: translateY(100px);
+            transition: all 0.4s ease;
+            z-index: 999;
+        }
+
+        .scroll-to-top.visible {
+            visibility: visible;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .scroll-to-top:hover {
+            background: var(--secondary-color);
+            transform: translateY(-5px);
+        }
+
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2rem; }
+            .hero-subtitle { font-size: 1.2rem; }
+            .nav-links { display: none; }
+            .dashboard-grid, .persona-grid, .strategy-grid, .charts-container { grid-template-columns: 1fr; }
+            .section-title { font-size: 2rem; }
+            .content-card { padding: 1.5rem; }
+            .script-header { flex-direction: column; text-align: center; }
+            .script-icon { margin-right: 0; margin-bottom: 1rem; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Scroll to Top Button -->
+    <a href="#" class="scroll-to-top" id="scrollToTopBtn">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+
+    <!-- Download Overlay -->
+    <div id="downloadOverlay" class="download-overlay">
+        <div class="overlay-content">
+            <div class="loading-spinner"></div>
+            <h2>Preparando tu descarga...</h2>
+            <p>El informe en PDF comenzará a descargarse en breve.</p>
+        </div>
+    </div>
+
+    <!-- Scroll Progress Bar -->
+    <div class="progress-bar" id="progressBar"></div>
+
+    <!-- Navegación Flotante -->
+    <nav class="floating-nav" id="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <img src="https://i.ibb.co/PvDtLjj3/tecnopluscol-1507316575-Infra-Nighclub-Photo-Room.png" alt="Tecnopluscol Logo" class="logo-img">
+                <span class="logo-text">TecnoPlusCol</span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#dashboard">Dashboard</a></li>
+                <li><a href="#introduccion">Introducción</a></li>
+                <li><a href="#arquetipos">Arquetipos</a></li>
+                <li><a href="#estrategias">Estrategias</a></li>
+                <li><a href="#conclusion">Conclusión</a></li>
+                <li><a href="#descarga">Descargar</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content animate-on-scroll" data-animation="fade-up">
+            <h1>Informe de Marketing Digital</h1>
+            <p class="hero-subtitle">Arquetipos de Cliente y Estrategias de Contenido</p>
+            <p class="hero-meta">
+                <strong>Empresa:</strong> Tecnopluscol | 
+                <strong>Producto:</strong> Línea Belleza Pro (Sistemas de uñas Soft Gel) | 
+                <strong>Fecha:</strong> 15 de octubre de 2025
+            </p>
+        </div>
+    </section>
+
+    <!-- Dashboard Section -->
+    <section class="dashboard" id="dashboard">
+        <div class="dashboard-grid">
+            <div class="metric-card animate-on-scroll" data-animation="fade-up">
+                <div class="metric-icon"><i class="fas fa-users"></i></div>
+                <div class="metric-value" id="personasCount">2</div>
+                <div class="metric-label">Arquetipos Definidos</div>
+            </div>
+            <div class="metric-card animate-on-scroll" data-animation="fade-up" style="transition-delay: 0.1s;">
+                <div class="metric-icon"><i class="fas fa-bullseye"></i></div>
+                <div class="metric-value" id="strategiesCount">6</div>
+                <div class="metric-label">Estrategias Clave</div>
+            </div>
+            <div class="metric-card animate-on-scroll" data-animation="fade-up" style="transition-delay: 0.2s;">
+                <div class="metric-icon"><i class="fas fa-video"></i></div>
+                <div class="metric-value" id="scriptsCount">3</div>
+                <div class="metric-label">Guiones de Campaña</div>
+            </div>
+            <div class="metric-card animate-on-scroll" data-animation="fade-up" style="transition-delay: 0.3s;">
+                <div class="metric-icon"><i class="fas fa-chart-pie"></i></div>
+                <div class="metric-value">80/20</div>
+                <div class="metric-label">Ratio Educativo/Promocional</div>
+            </div>
+        </div>
+
+        <div class="charts-container">
+            <div class="chart-card animate-on-scroll" data-animation="fade-left">
+                <h3 class="chart-title">Distribución de Contenido por Pilar</h3>
+                <canvas id="contentChart"></canvas>
+            </div>
+            <div class="chart-card animate-on-scroll" data-animation="fade-right">
+                <h3 class="chart-title">Perfil Demográfico: Sofía</h3>
+                <canvas id="demographicChart"></canvas>
+            </div>
+        </div>
+    </section>
+
+    <!-- Content for Word Document (Hidden container for export) -->
+    <div id="wordContent" style="display: none;">
+        <!-- This will be populated dynamically for Word export -->
+    </div>
+
+    <!-- Section 1: Introducción -->
+    <section class="content-section" id="introduccion">
+        <div class="section-header animate-on-scroll" data-animation="fade-up">
+            <div class="section-number">1</div>
+            <h2 class="section-title">Introducción</h2>
+        </div>
+        <div class="content-card animate-on-scroll" data-animation="fade-up">
+            <p>
+                El presente informe se genera como una profundización al Plan Estratégico de Marketing Digital desarrollado previamente para <strong>Tecnopluscol</strong>. El objetivo principal es definir de forma precisa el público objetivo mediante la creación de arquetipos de cliente (<em>buyer personas</em>) y establecer las estrategias de contenido y de interacción social más efectivas.
+            </p>
+            <p>
+                Estos elementos son cruciales para garantizar una ejecución precisa del plan de marketing, optimizar el presupuesto y capitalizar la principal ventaja competitiva de la empresa: su <strong>autoridad y experiencia comprobada</strong> en el sistema de uñas soft gel.
+            </p>
+            <div class="highlight-box">
+                <h4><i class="fas fa-lightbulb"></i> Objetivo Estratégico</h4>
+                <p>Transformar a Tecnopluscol en el principal recurso educativo y aliado estratégico de las manicuristas profesionales en Colombia.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 2: Arquetipos -->
+    <section class="content-section" id="arquetipos">
+        <div class="section-header animate-on-scroll" data-animation="fade-up">
+            <div class="section-number">2</div>
+            <h2 class="section-title">Definición de Arquetipos de Cliente</h2>
+            <p class="section-description">
+                La segmentación del público objetivo se formaliza a través de dos arquetipos: el cliente ideal (positivo) al que se dirigirán todos los esfuerzos de la marca, y el cliente a evitar (negativo) que generaría un desgaste ineficiente de recursos.
+            </p>
+        </div>
+
+        <div class="persona-grid">
+            <div class="persona-card animate-on-scroll" data-animation="fade-right">
+                <div class="persona-header positive">
+                    <div class="persona-avatar"><i class="fas fa-star"></i></div>
+                    <h3 class="persona-name">Sofía, la Artista Emprendedora</h3>
+                    <p class="persona-tagline">Cliente Ideal - Buyer Persona Positivo</p>
+                    <span class="badge badge-success">OBJETIVO PRINCIPAL</span>
+                </div>
+                <div class="persona-body">
+                    <div class="persona-detail">
+                        <div class="detail-icon"><i class="fas fa-user"></i></div>
+                        <div class="detail-content">
+                            <h4>Perfil Demográfico</h4>
+                            <p><strong>Edad:</strong> 28 años</p>
+                            <p><strong>Ubicación:</strong> Ciudad intermedia en Colombia (ej. Sincelejo, Sucre)</p>
+                            <p><strong>Ingresos:</strong> $1.500.000 - $3.000.000 COP mensuales</p>
+                        </div>
+                    </div>
+                    <div class="persona-detail">
+                        <div class="detail-icon"><i class="fas fa-bullseye"></i></div>
+                        <div class="detail-content">
+                            <h4>Motivaciones & Valores</h4>
+                            <p>Valora la <strong>calidad, durabilidad e innovación</strong>. Busca productos que protejan su reputación profesional.</p>
+                        </div>
+                    </div>
+                     <div class="persona-detail">
+                        <div class="detail-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <div class="detail-content">
+                            <h4>Metas</h4>
+                            <p><strong>Corto plazo:</strong> Llenar su agenda de clientas</p>
+                            <p><strong>Largo plazo:</strong> Montar su propio salón y dictar cursos</p>
+                        </div>
+                    </div>
+
+                    <div class="persona-detail">
+                        <div class="detail-icon">
+                            <i class="fas fa-shopping-cart"></i>
+                        </div>
+                        <div class="detail-content">
+                            <h4>Comportamiento de Compra</h4>
+                            <p><strong>Frecuencia:</strong> Cada 2-3 semanas</p>
+                            <p><strong>Ticket promedio:</strong> $150.000 - $250.000 COP</p>
+                            <p><strong>Canal:</strong> WhatsApp e Instagram directo con distribuidores</p>
+                            <p>No es sensible al precio más bajo, sino a la mejor relación costo-beneficio.</p>
+                        </div>
+                    </div>
+
+                    <div class="persona-detail">
+                        <div class="detail-icon">
+                            <i class="fas fa-mobile-alt"></i>
+                        </div>
+                        <div class="detail-content">
+                            <h4>Redes Sociales</h4>
+                            <p>Muy activa en <strong>Instagram y TikTok</strong>. Utiliza WhatsApp Business para gestión de citas.</p>
+                            <p><strong>Intereses:</strong> Nail art, tendencias de moda, gestión de pequeños negocios, fotografía de producto.</p>
+                        </div>
+                    </div>
+
+                    <div class="persona-detail">
+                        <div class="detail-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div class="detail-content">
+                            <h4>Un Día en la Vida de Sofía</h4>
+                            <p><strong>7:00 AM:</strong> Revisa agenda en WhatsApp e interactúa en Instagram</p>
+                            <p><strong>Jornada laboral:</strong> Atención intensiva a clientas</p>
+                            <p><strong>Almuerzo:</strong> Consume contenido tutorial y realiza pedidos de insumos</p>
+                            <p><strong>Noche:</strong> Fotografía sus mejores trabajos y busca inspiración</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="persona-card animate-on-scroll" data-animation="fade-left">
+                <div class="persona-header negative">
+                    <div class="persona-avatar"><i class="fas fa-ban"></i></div>
+                    <h3 class="persona-name">Laura, la Cazadora de Ofertas</h3>
+                    <p class="persona-tagline">Cliente a Evitar - Buyer Persona Negativo</p>
+                    <span class="badge badge-danger">EVITAR</span>
+                </div>
+                <div class="persona-body">
+                    <div class="persona-detail">
+                        <div class="detail-icon"><i class="fas fa-user-slash"></i></div>
+                        <div class="detail-content">
+                            <h4>Perfil</h4>
+                            <p><strong>Edad:</strong> 20 años</p>
+                            <p><strong>Actividad:</strong> Estudiante que realiza uñas como hobby o ingreso extra ocasional</p>
+                        </div>
+                    </div>
+                     <div class="persona-detail">
+                        <div class="detail-icon">
+                            <i class="fas fa-tag"></i>
+                        </div>
+                        <div class="detail-content">
+                            <h4>Comportamiento</h4>
+                            <p>Dominada por el <strong>precio más bajo</strong>. Busca kits económicos en marketplaces o grupos informales.</p>
+                            <p>No valora la marca, la calidad ni la asesoría técnica.</p>
+                        </div>
+                    </div>
+                    <div class="persona-detail">
+                        <div class="detail-icon"><i class="fas fa-exclamation-triangle"></i></div>
+                        <div class="detail-content">
+                            <h4>Problemas para la Marca</h4>
+                            <p>Tiende a dejar <strong>malas reseñas</strong> ante fallas producto de mala aplicación.</p>
+                            <p>Incrementa el costo operativo de soporte.</p>
+                             <p>No es leal y atrae competencia de baja calidad.</p>
+                        </div>
+                    </div>
+                     <div class="persona-detail">
+                        <div class="detail-icon">
+                            <i class="fas fa-times-circle"></i>
+                        </div>
+                        <div class="detail-content">
+                            <h4>Estrategia</h4>
+                            <p><strong>Dirigir esfuerzos hacia ella resultaría en:</strong></p>
+                            <p>• Estrategia desenfocada</p>
+                            <p>• Devaluación de la marca</p>
+                            <p>• Desgaste operativo sin retorno económico positivo</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+         <!-- Tabla Detallada de Sofía -->
+        <div class="content-card animate-on-scroll" data-animation="fade-up" style="margin-top: 3rem;">
+            <h3>Información Detallada del Arquetipo "Sofía, la Artista Emprendedora"</h3>
+            
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Variable</th>
+                        <th>Categoría</th>
+                        <th>Detalle Específico</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td rowspan="4"><strong>Información Demográfica</strong></td>
+                        <td>Edad</td>
+                        <td>28 años</td>
+                    </tr>
+                    <tr>
+                        <td>Ubicación</td>
+                        <td>Ciudad intermedia en Colombia (ej. Sincelejo, Sucre)</td>
+                    </tr>
+                    <tr>
+                        <td>Ingresos</td>
+                        <td>$1.500.000 - $3.000.000 COP mensuales (variable)</td>
+                    </tr>
+                    <tr>
+                        <td>Frecuencia de Compra</td>
+                        <td>Cada 2-3 semanas, con ticket promedio de $150.000 - $250.000 COP</td>
+                    </tr>
+                    <tr>
+                        <td rowspan="4"><strong>Interés General y Motivación</strong></td>
+                        <td>Valores</td>
+                        <td>Calidad, durabilidad e innovación. Confianza y honestidad del proveedor</td>
+                    </tr>
+                    <tr>
+                        <td>Metas Personales</td>
+                        <td>A corto plazo: Llenar su agenda. A largo plazo: Montar su propio salón y dictar cursos</td>
+                    </tr>
+                    <tr>
+                        <td>Temores</td>
+                        <td>Uso de productos de mala calidad que arruinen su reputación o el rezago ante nuevas tendencias</td>
+                    </tr>
+                    <tr>
+                        <td>Identificación</td>
+                        <td>Manicuristas reconocidas que han consolidado su marca personal</td>
+                    </tr>
+                    <tr>
+                        <td rowspan="3"><strong>Estilo de Vida y Medios</strong></td>
+                        <td>Redes Sociales</td>
+                        <td>Muy activa en Instagram y TikTok. Utiliza WhatsApp Business para la gestión de citas</td>
+                    </tr>
+                    <tr>
+                        <td>Intereses</td>
+                        <td>Nail art, tendencias de moda, gestión de pequeños negocios, fotografía de producto</td>
+                    </tr>
+                    <tr>
+                        <td>Eventos Cruciales</td>
+                        <td>Talleres de capacitación en línea, lanzamientos de productos de marcas de confianza, Lives de Instagram con expertas</td>
+                    </tr>
+                    <tr>
+                        <td rowspan="3"><strong>Comportamiento de Compra</strong></td>
+                        <td>Lugar de Compra</td>
+                        <td>Directamente a distribuidores especializados (WhatsApp o Instagram)</td>
+                    </tr>
+                    <tr>
+                        <td>Propuestas</td>
+                        <td>Receptiva a productos innovadores para servicios diferenciados</td>
+                    </tr>
+                    <tr>
+                        <td>Sensibilidad</td>
+                        <td>No es sensible al precio más bajo, sino a la mejor relación costo-beneficio</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- Section 3: Estrategias -->
+    <section class="content-section" id="estrategias">
+        <div class="section-header animate-on-scroll" data-animation="fade-up">
+            <div class="section-number">3</div>
+            <h2 class="section-title">Estrategias de Marketing Digital</h2>
+            <p class="section-description">
+                Las estrategias se centran en posicionar a Tecnopluscol como la autoridad experta y el aliado estratégico de la manicurista profesional.
+            </p>
+        </div>
+
+        <div class="content-card animate-on-scroll" data-animation="fade-up">
+            <h3><i class="fas fa-graduation-cap"></i> Estrategias de Contenido para Recordación de Marca (Branding)</h3>
+            <p>
+                El contenido debe seguir una proporción de <strong>80% educativo y 20% promocional</strong>, enfocándose en resolver los problemas y temores de la Buyer Persona Sofía.
+            </p>
+        </div>
+
+        <div class="strategy-grid">
+            <div class="strategy-card animate-on-scroll" data-animation="fade-up">
+                <div class="strategy-number">1</div>
+                <h3>Academia Tecnoplus</h3>
+                <p><strong>Formato:</strong> Reels y Carruseles en Instagram</p>
+                <p><strong>Temática:</strong> Micro-tutoriales técnicos que aborden las dificultades y dudas profesionales.</p>
+                 <h4 style="margin-top: 1.5rem; font-size: 1.1rem;">Ejemplos de Temas:</h4>
+                <ul>
+                    <li>3 Errores que Debes Evitar al Preparar la Uña para Soft Gel</li>
+                    <li>Paso a Paso: Cómo Lograr un Sellado de Cutícula Perfecto</li>
+                    <li>La Ciencia Detrás de Nuestro Primer: ¿Por Qué Funciona?</li>
+                    <li>Tip Pro: Cómo Retirar el Soft Gel sin Dañar la Uña Natural</li>
+                </ul>
+            </div>
+            <div class="strategy-card animate-on-scroll" data-animation="fade-up" style="transition-delay: 0.1s;">
+                <div class="strategy-number">2</div>
+                <h3>Casos de Éxito: #ArteConTecnoplus</h3>
+                 <p><strong>Formato:</strong> Historias y Posts en el feed de Instagram</p>
+                <p><strong>Temática:</strong> Contenido Generado por el Usuario (UGC) para generar prueba social.</p>
+                 <h4 style="margin-top: 1.5rem; font-size: 1.1rem;">Ejecución:</h4>
+                <ul>
+                    <li>Mostrar resultados de calidad logrados por clientas como Sofía</li>
+                    <li>Generar prueba social</li>
+                    <li>Republicar trabajos etiquetando el perfil de la manicurista</li>
+                    <li>Fomentar el uso del hashtag #MiArteConTecnoplus</li>
+                </ul>
+            </div>
+            <div class="strategy-card animate-on-scroll" data-animation="fade-up" style="transition-delay: 0.2s;">
+                <div class="strategy-number">3</div>
+                <h3>Detrás de la Marca</h3>
+                 <p><strong>Formato:</strong> Historias de Instagram y WhatsApp Status</p>
+                <p><strong>Temática:</strong> Humanización de la marca y construcción de transparencia.</p>
+                 <h4 style="margin-top: 1.5rem; font-size: 1.1rem;">Ejemplos de Temas:</h4>
+                <ul>
+                    <li>Unboxings de nueva mercancía</li>
+                    <li>Preparación de pedidos</li>
+                    <li>Consejos rápidos del fundador/experto</li>
+                    <li>Sesiones en vivo de preguntas y respuestas</li>
+                </ul>
+            </div>
+        </div>
+         <!-- Modelo de Interacción Social -->
+        <div class="content-card animate-on-scroll" data-animation="fade-up" style="margin-top: 3rem;">
+            <h3><i class="fas fa-users-cog"></i> Modelo de Interacción Social para Ganar Visibilidad</h3>
+            <p style="font-size: 1.1rem; margin-bottom: 2rem;">
+                El modelo, denominado <strong>"El Círculo de Aliados Pro"</strong>, se enfoca en la creación de una comunidad leal que se convierta en embajadora de la marca.
+            </p>
+
+            <div class="strategy-grid">
+                <!-- Fase 1 -->
+                <div class="strategy-card">
+                    <div class="strategy-number">
+                        <i class="fas fa-ear-listen"></i>
+                    </div>
+                    <h3>Fase 1: Escuchar y Aportar</h3>
+                    <p style="font-style: italic; color: var(--text-light);">Interacción Proactiva</p>
+                    
+                    <h4 style="margin-top: 1.5rem; font-size: 1.1rem;">Acción:</h4>
+                    <p>Dedicar <strong>30 minutos diarios</strong> a interactuar proactivamente en las publicaciones de manicuristas profesionales (perfiles similares a Sofía).</p>
+                    
+                    <h4 style="margin-top: 1rem; font-size: 1.1rem;">Objetivo:</h4>
+                    <p>No la venta directa, sino aportar valor, conocimiento y generar notoriedad como marca experta que se interesa por la comunidad.</p>
+                </div>
+
+                <!-- Fase 2 -->
+                <div class="strategy-card">
+                    <div class="strategy-number">
+                        <i class="fas fa-handshake"></i>
+                    </div>
+                    <h3>Fase 2: Colaborar y Co-crear</h3>
+                    <p style="font-style: italic; color: var(--text-light);">Alianzas Estratégicas</p>
+                    
+                    <h4 style="margin-top: 1.5rem; font-size: 1.1rem;">Acción:</h4>
+                    <ul>
+                        <li>Contactar micro-influencers (manicuristas con 1.000 a 10.000 seguidores)</li>
+                        <li>Realizar intercambios de producto a cambio de publicaciones</li>
+                        <li>Programar Instagram Lives conjuntos sobre temas técnicos o de gestión</li>
+                    </ul>
+                    
+                    <h4 style="margin-top: 1rem; font-size: 1.1rem;">Objetivo:</h4>
+                    <p>Extender el alcance de la marca a nuevas audiencias, construyendo confianza mediante la validación de una voz ya respetada en la comunidad.</p>
+                </div>
+
+                <!-- Fase 3 -->
+                <div class="strategy-card">
+                    <div class="strategy-number">
+                        <i class="fas fa-crown"></i>
+                    </div>
+                    <h3>Fase 3: Consolidar y Fidelizar</h3>
+                    <p style="font-style: italic; color: var(--text-light);">Creación de Comunidad Exclusiva</p>
+                    
+                    <h4 style="margin-top: 1.5rem; font-size: 1.1rem;">Acción:</h4>
+                    <p>Establecer un <strong>"Club de Clientas Pro"</strong> a través de las Listas de Difusión de WhatsApp.</p>
+                    
+                    <h4 style="margin-top: 1rem; font-size: 1.1rem;">Contenido Exclusivo:</h4>
+                    <ul>
+                        <li>Acceso anticipado a productos</li>
+                        <li>Tips técnicos avanzados</li>
+                        <li>Descuentos por lealtad</li>
+                    </ul>
+                    
+                    <h4 style="margin-top: 1rem; font-size: 1.1rem;">Objetivo:</h4>
+                    <p>Reforzar el sentido de pertenencia y exclusividad, convirtiendo a las clientas más importantes en defensoras y promotoras fieles de la marca.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 4: Conclusión -->
+    <section class="content-section" id="conclusion">
+        <div class="section-header animate-on-scroll" data-animation="fade-up">
+            <div class="section-number">4</div>
+            <h2 class="section-title">Conclusión</h2>
+        </div>
+        <div class="content-card animate-on-scroll" data-animation="fade-up">
+            <p>
+                La identificación precisa de <strong>"Sofía, la Artista Emprendedora"</strong> como la clienta ideal y el descarte estratégico de <strong>"Laura, la Cazadora de Ofertas"</strong> establecen un enfoque de precisión quirúrgica para todas las futuras acciones de marketing.
+            </p>
+             <p style="font-size: 1.1rem; line-height: 1.9;">
+                Las estrategias de contenido propuestas, centradas en la educación y la autoridad (<strong>"Academia Tecnoplus"</strong>), junto con el modelo de interacción social <strong>"El Círculo de Aliados Pro"</strong>, están diseñadas para ser implementadas con un presupuesto ajustado.
+            </p>
+            <div class="highlight-box">
+                <h4><i class="fas fa-trophy"></i> Resultado Esperado</h4>
+                <p>
+                    Al transformar a Tecnopluscol en el principal recurso educativo y aliado estratégico, la empresa cimentará una marca sólida, respetada y con potencial de crecimiento sostenido a largo plazo.
+                </p>
+            </div>
+        </div>
+    </section>
+    
+      <!-- Section 5: Anexo - Guiones de Campaña -->
+    <section class="content-section" id="anexo">
+        <div class="section-header animate-on-scroll" data-animation="fade-up">
+            <div class="section-number">A</div>
+            <h2 class="section-title">Anexo A: Guiones de Campaña de Reels</h2>
+            <p class="section-description">
+                Estos guiones están diseñados para Instagram y TikTok. Están dirigidos a nuestra Buyer Persona Sofía, la Artista Emprendedora, y buscan resolver problemas técnicos comunes para posicionar a Tecnopluscol como la autoridad técnica en Soft Gel.
+            </p>
+        </div>
+
+        <!-- Guion A.1 -->
+        <div class="script-card animate-on-scroll" data-animation="fade-up">
+            <div class="script-header">
+                <div class="script-icon">
+                    <i class="fas fa-film"></i>
+                </div>
+                <div class="script-title">
+                    <h3>Guion A.1: El Temor al Levantamiento Prematuro</h3>
+                    <p class="script-subtitle">Pilar: Academia Tecnoplus - Resuelve el problema de durabilidad</p>
+                </div>
+            </div>
+
+            <table class="script-table">
+                <tr>
+                    <td><strong>Hook (0-2 seg)</strong></td>
+                    <td>
+                        <strong>Visual:</strong> Manos rápidas aplicando un Soft Gel que se levanta por un lateral (efecto de falla). Manicura frustrada.<br>
+                        <strong>Audio:</strong> Sonido de error o frustración (ej. "fail sound").<br>
+                        <strong>Texto en pantalla (GRANDE):</strong> ¿Por qué se le levanta el Soft Gel a tu clienta? 😭
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>Problema (2-4 seg)</strong></td>
+                    <td>
+                        <strong>Visual:</strong> Se enfoca en la cutícula con un zoom extremo. Señala una micro-capa de piel.<br>
+                        <strong>Voz en off:</strong> ¡No es tu Top Coat! Es tu preparación. Tienes piel atrapada en la zona de cutícula.
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>Solución (4-8 seg)</strong></td>
+                    <td>
+                        <strong>Visual:</strong> Manicura usando el producto Tecnopluscol (Primer/Cleaner) y limpiando con una herramienta precisa. Demuestra una técnica de limpieza de 360 grados.<br>
+                        <strong>Voz en off:</strong> El sellado perfecto empieza con 30 segundos extra de limpieza. Usa nuestro Cleaner PRO para deshidratar el contorno y ¡cero residuos!<br>
+                        <strong>Texto en pantalla:</strong> ✨ TIP PRO: 30 segundos de limpieza extra.
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>Cierre (8-10 seg)</strong></td>
+                    <td>
+                        <strong>Visual:</strong> Muestra la uña perfecta con el Soft Gel de Tecnopluscol.<br>
+                        <strong>Voz en off:</strong> Garantiza 4 semanas de duración. Síguenos para más tips que tu clienta amará.<br>
+                        <strong>Texto en pantalla:</strong> ¿Quieres duración de 4 SEMANAS? SÍGUENOS.<br>
+                        <strong>Hashtags:</strong> #SoftGelTip #Tecnopluscol #NailArtColombia #ManicuristaPro
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- Guion A.2 -->
+        <div class="script-card animate-on-scroll" data-animation="fade-up">
+            <div class="script-header">
+                <div class="script-icon">
+                    <i class="fas fa-video"></i>
+                </div>
+                <div class="script-title">
+                    <h3>Guion A.2: El Secreto del Curado Completo</h3>
+                    <p class="script-subtitle">Pilar: Academia Tecnoplus - Resuelve dudas sobre la tecnología UV/LED y la calidad</p>
+                </div>
+            </div>
+
+            <table class="script-table">
+                <tr>
+                    <td><strong>Hook (0-3 seg)</strong></td>
+                    <td>
+                        <strong>Visual:</strong> Manos sosteniendo una lámpara UV/LED y luego mostrando un color vibrante que parece opaco.<br>
+                        <strong>Audio:</strong> Música moderna y enérgica.<br>
+                        <strong>Texto en pantalla:</strong> ¿Tu esmalte semipermanente no cura bien? OJO 👀
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>Problema (3-6 seg)</strong></td>
+                    <td>
+                        <strong>Visual:</strong> Imagen de un gel espeso siendo aplicado. Luego, un gráfico simple (animado) que muestra cómo la luz UV no penetra capas gruesas.<br>
+                        <strong>Voz en off:</strong> No es la lámpara, es la capa. ¡Las capas gruesas no curan por completo! El centro queda crudo y eso debilita todo el sistema.<br>
+                        <strong>Texto en pantalla:</strong> ❌ CAPAS GRUESAS = CENTRO CRUDO
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>Solución (6-9 seg)</strong></td>
+                    <td>
+                        <strong>Visual:</strong> Manicura demostrando la aplicación del Base Coat de Tecnopluscol en dos capas ultra-finas y uniformes.<br>
+                        <strong>Voz en off:</strong> La clave es aplicar dos capas increíblemente finas. ¡Como si fueras a fallar! Curas 60 segundos cada una y listo.<br>
+                        <strong>Texto en pantalla:</strong> ✅ CLAVE: Dos capas F-I-N-A-S. Cúrate de la mala práctica.
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>Cierre (9-11 seg)</strong></td>
+                    <td>
+                        <strong>Visual:</strong> Muestra la manicura terminada con brillo intenso y un producto de Tecnopluscol.<br>
+                        <strong>Voz en off:</strong> ¡Ponlo a prueba y sube tu resultado! ¿Qué otra duda tienes?<br>
+                        <strong>Texto en pantalla:</strong> Comenta tu duda técnica 👇<br>
+                        <strong>Hashtags:</strong> #CuradoUV #TecnologiaNailArt #Tecnopluscol #SaludUñas
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- Guion A.3 -->
+        <div class="script-card animate-on-scroll" data-animation="fade-up">
+            <div class="script-header">
+                <div class="script-icon">
+                    <i class="fas fa-microscope"></i>
+                </div>
+                <div class="script-title">
+                    <h3>Guion A.3: La Ciencia Detrás de la Adhesión</h3>
+                    <p class="script-subtitle">Pilar: Academia Tecnoplus y Venta Indirecta - Muestra el valor del producto Base/Primer</p>
+                </div>
+            </div>
+
+            <table class="script-table">
+                <tr>
+                    <td><strong>Hook (0-2 seg)</strong></td>
+                    <td>
+                        <strong>Visual:</strong> Muestra de una uña limpia y una gota de agua. El agua resbala.<br>
+                        <strong>Audio:</strong> Sonido de "Sizzle" o un efecto de revelación dramático.<br>
+                        <strong>Texto en pantalla:</strong> ¿Sabes realmente CÓMO funciona un Primer? 🤯
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>Función (2-5 seg)</strong></td>
+                    <td>
+                        <strong>Visual:</strong> Muestra una uña. Aplica el Primer Adherente Tecnopluscol. Gráfico animado mostrando cómo el Primer crea "tentáculos" o "garras" microscópicas que se anclan a la queratina.<br>
+                        <strong>Voz en off:</strong> Nuestro Primer Adherente no es mágico, ¡es ciencia! Crea micro-puentes de adhesión. Piensa en él como un velcro invisible para tu Soft Gel.<br>
+                        <strong>Texto en pantalla:</strong> 🔬 El Primer crea Micro-Velcro.
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>Beneficio (5-8 seg)</strong></td>
+                    <td>
+                        <strong>Visual:</strong> Muestra un cartel de "Cliente Feliz" o "Agenda Llena" mientras la manicura trabaja con confianza.<br>
+                        <strong>Voz en off:</strong> Esto significa que no solo dura, sino que previene el desprendimiento y protege la uña natural. ¡Tu reputación es nuestra prioridad!<br>
+                        <strong>Texto en pantalla:</strong> Confía en la fórmula PRO de Tecnopluscol. 💯
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>Cierre (8-10 seg)</strong></td>
+                    <td>
+                        <strong>Visual:</strong> Primer plano del producto Primer Adherente Tecnopluscol.<br>
+                        <strong>Voz en off:</strong> Pídelo por WhatsApp. ¡Link en el perfil!<br>
+                        <strong>Texto en pantalla:</strong> ¡PIDE EL TUYO! Link en BIO.<br>
+                        <strong>Hashtags:</strong> #AdherenciaPerfecta #Tecnopluscol #SoftGelTips #ProductosDeUñas
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </section>
+
+
+    <!-- Download Section -->
+    <section class="download-section" id="descarga">
+        <div class="download-content animate-on-scroll" data-animation="fade-up">
+            <h2><i class="fas fa-file-pdf"></i> Descarga el Informe Completo</h2>
+            <p>
+                Obtén este informe en formato PDF, listo para presentar o compartir.
+            </p>
+            <button class="btn-download" onclick="startPDFDownload()">
+                <i class="fas fa-download"></i>
+                <span>Descargar en PDF (.pdf)</span>
+            </button>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="logo footer-logo">
+                <img src="https://i.ibb.co/PvDtLjj3/tecnopluscol-1507316575-Infra-Nighclub-Photo-Room.png" alt="Tecnopluscol Logo" class="logo-img">
+                <span class="logo-text">TecnoPlusCol</span>
+            </div>
+            <p><strong>Informe de Marketing Digital - Tecnopluscol</strong></p>
+            <ul class="footer-nav">
+                <li><a href="#dashboard">Dashboard</a></li>
+                <li><a href="#introduccion">Introducción</a></li>
+                <li><a href="#arquetipos">Arquetipos</a></li>
+                <li><a href="#estrategias">Estrategias</a></li>
+                <li><a href="#conclusion">Conclusión</a></li>
+                <li><a href="#descarga">Descargar</a></li>
+            </ul>
+            <p>© 2025 Arnold López Ayala. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Scroll Progress Bar
+        window.addEventListener('scroll', () => {
+            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (winScroll / height) * 100;
+            document.getElementById('progressBar').style.width = scrolled + '%';
+        });
+
+        // Animate on Scroll
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1 });
+        
+        document.querySelectorAll('.animate-on-scroll').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Navbar hide on scroll down, show on scroll up
+        let lastScroll = 0;
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            const currentScroll = window.pageYOffset;
+            if (currentScroll <= 0) {
+                navbar.style.transform = 'translateY(0)';
+                return;
+            }
+            if (currentScroll > lastScroll && currentScroll > 100) {
+                navbar.style.transform = 'translateY(-100%)';
+            } else {
+                navbar.style.transform = 'translateY(0)';
+            }
+            lastScroll = currentScroll;
+        });
+
+        // Scroll to Top Button Visibility
+        const scrollToTopBtn = document.getElementById('scrollToTopBtn');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 300) {
+                scrollToTopBtn.classList.add('visible');
+            } else {
+                scrollToTopBtn.classList.remove('visible');
+            }
+        });
+
+        // Charts
+        const contentCtx = document.getElementById('contentChart').getContext('2d');
+        new Chart(contentCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Academia Tecnoplus', 'Casos de Éxito', 'Detrás de la Marca'],
+                datasets: [{
+                    data: [50, 30, 20],
+                    backgroundColor: ['#6366f1', '#ec4899', '#10b981'],
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: { legend: { position: 'bottom', labels: { padding: 15, font: { family: "'Inter', sans-serif" }}}}
+            }
+        });
+
+        const demographicCtx = document.getElementById('demographicChart').getContext('2d');
+        new Chart(demographicCtx, {
+            type: 'bar',
+            data: {
+                labels: ['Instagram', 'TikTok', 'WhatsApp', 'Facebook'],
+                datasets: [{
+                    label: 'Nivel de Actividad (%)',
+                    data: [95, 85, 90, 30],
+                    backgroundColor: ['#6366f1', '#ec4899', '#10b981', '#f59e0b'],
+                    borderRadius: 8
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: { y: { beginAtZero: true, max: 100, ticks: { callback: (v) => v + '%' } } },
+                plugins: { legend: { display: false } }
+            }
+        });
+
+        // PDF Download Function with Overlay
+        function startPDFDownload() {
+            const overlay = document.getElementById('downloadOverlay');
+            const pdfUrl = 'https://drive.google.com/uc?export=download&id=1_uJ0pgX64PwS8sSFjOjVamWs9vnT4-TP';
+            const fileName = 'Informe_Marketing_Tecnopluscol.pdf';
+
+            // Show overlay
+            overlay.classList.add('active');
+            setTimeout(() => { overlay.style.opacity = '1'; }, 10);
+
+            // Create a temporary link to trigger the download
+            const link = document.createElement('a');
+            link.href = pdfUrl;
+            link.download = fileName;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+
+            // Hide overlay after a few seconds
+            setTimeout(() => {
+                overlay.style.opacity = '0';
+                setTimeout(() => { overlay.classList.remove('active'); }, 300);
+            }, 3000); // Overlay visible for 3 seconds
+        }
+
+    </script>
+</body>
+</html>
